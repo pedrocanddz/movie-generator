@@ -5,6 +5,8 @@ export default{
     data(){
         return{
             moviesList: [],
+            generos: [],
+            movieFetcher: new MovieFetcher(),
             numero: 0,
         }
     },
@@ -15,39 +17,45 @@ export default{
         },
         changeNumber(){
             this.numero = this.getRandomInt(this.moviesList.length);
+        },
+        getGeneros(generos){
+            return generos.map((genero) => {
+                return this.generos.find((item) => item.id === genero);
+            });
         }
     },
     async created(){
-            console.log('created');
-            const movieFetcher = new MovieFetcher();
-            this.moviesList = await movieFetcher.getMovies();
-            console.log(this.moviesList);
+            this.moviesList = await this.movieFetcher.getMorePages();
             this.numero = this.getRandomInt(this.moviesList.length);
+            this.generos = await this.movieFetcher.getGenres();
+            console.log(this.moviesList)
     },
 }
 </script>
 
 <template>
-    <section class="displayMovie">
+    <section class="displayMovie container">
         <div v-if="moviesList.length > 0">
             <h1>Movie List</h1>
             <div>
-                <h2 v-if="moviesList[0].original_language == 'pt' &&
-                        moviesList[0].original_language == 'en' ">
-                    {{ moviesList[0].original_title }}
+                <h2 v-if="moviesList[numero].original_language == 'pt' &&
+                        moviesList[numero].original_language == 'en' ">
+                    {{ moviesList[numero].original_title }}
                 </h2>
                 <h2 v-else>
-                    {{ moviesList[0].title }}
+                    {{ moviesList[numero].title }}
                 </h2>
-                <img :src="`https://image.tmdb.org/t/p/w300${moviesList[0].poster_path}`" alt="poster do filme">
+                <p v-for="genero, id in getGeneros(moviesList[numero].genre_ids)" :key="id">
+                    {{genero.name}}
+                </p>
+                <img :src="`https://image.tmdb.org/t/p/w300${moviesList[numero].poster_path}`" alt="poster do filme">
                 <p>
-                    {{ moviesList[0].overview }}
+                    {{ moviesList[numero].overview }}
                 </p>
             </div>
-            <p>Nota : {{ moviesList[0].vote_average }}</p>
+            <p>Nota : {{ moviesList[numero].vote_average }}</p>
         </div>
         <div v-else>Loading</div>
-        <div>{{ numero }}</div>
-        <button @click="changeNumber"></button>
+        <button @click="changeNumber">Gerar Outro</button>
     </section>
 </template>
