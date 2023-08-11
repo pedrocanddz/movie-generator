@@ -34,7 +34,7 @@ export default{
 </script>
 
 <template>
-    <section class="displayMovie container">
+    <section class="displayMovie container m-auto">
         <div v-if="moviesList.length > 0">
             <h1>Movie List</h1>
             <div>
