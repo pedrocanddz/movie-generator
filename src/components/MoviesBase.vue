@@ -35,27 +35,31 @@ export default{
 
 <template>
     <section class="displayMovie container m-auto">
-        <div v-if="moviesList.length > 0">
-            <h1>Movie List</h1>
-            <div>
-                <h2 v-if="moviesList[numero].original_language == 'pt' &&
+        <div v-if="moviesList.length > 0" class="w-[70%] min-h-[70%]  flex flex-col justify-center items-center align-center m-auto">
+            <h1 class="text-3xl">Movies</h1>
+            <div class="text-center">
+                <h2 class="py-2 text-4xl" v-if="moviesList[numero].original_language == 'pt' &&
                         moviesList[numero].original_language == 'en' ">
                     {{ moviesList[numero].original_title }}
                 </h2>
-                <h2 v-else>
+                <h2 class="py-2 text-4xl" v-else>
                     {{ moviesList[numero].title }}
                 </h2>
-                <p v-for="genero, id in getGeneros(moviesList[numero].genre_ids)" :key="id">
-                    {{genero.name}}
-                </p>
-                <img :src="`https://image.tmdb.org/t/p/w300${moviesList[numero].poster_path}`" alt="poster do filme">
-                <p>
+                <div>
+                    <span class="px-2 bg-sky-200 rounded-md mx-1" v-for="genero, id in getGeneros(moviesList[numero].genre_ids)" :key="id">
+                        {{genero.name}}
+                    </span>
+                </div>
+                <div class="p-5">
+                    <img  class="m-auto rounded-md" :src="`https://image.tmdb.org/t/p/w300${moviesList[numero].poster_path}`" alt="poster do filme">
+                </div>
+                <p class="bg-sky-200 rounded-md min-h-[180px] pt-5">
                     {{ moviesList[numero].overview }}
                 </p>
             </div>
-            <p>Nota : {{ moviesList[numero].vote_average }}</p>
+            <p class="py-3">Nota : {{ moviesList[numero].vote_average }}</p>
+            <button class="bg-sky-500 p-2 rounded-md" @click="changeNumber">Gerar Outro</button>
         </div>
         <div v-else>Loading</div>
-        <button @click="changeNumber">Gerar Outro</button>
     </section>
 </template>
