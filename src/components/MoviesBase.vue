@@ -8,6 +8,7 @@ export default{
             generos: [],
             movieFetcher: new MovieFetcher(),
             numero: 0,
+            favoritesList:[],
         }
     },
     methods:{
@@ -22,13 +23,16 @@ export default{
             return generos.map((genero) => {
                 return this.generos.find((item) => item.id === genero);
             });
+        },
+        addFavorite(){
+            this.favoritesList.push(this.moviesList[this.numero]);
+            console.log(this.favoritesList);
         }
     },
     async created(){
             this.moviesList = await this.movieFetcher.getMorePages();
             this.numero = this.getRandomInt(this.moviesList.length);
             this.generos = await this.movieFetcher.getGenres();
-            console.log(this.moviesList)
     },
 }
 </script>
@@ -47,18 +51,27 @@ export default{
                 </h2>
                 <div>
                     <span class="px-2 bg-sky-200 rounded-md mx-1" v-for="genero, id in getGeneros(moviesList[numero].genre_ids)" :key="id">
-                        {{genero.name}}
+                        <span v-if="genero">
+                            {{genero.name}}
+                        </span>
                     </span>
                 </div>
                 <div class="p-5">
                     <img  class="m-auto rounded-md" :src="`https://image.tmdb.org/t/p/w300${moviesList[numero].poster_path}`" alt="poster do filme">
                 </div>
-                <p class="bg-sky-200 rounded-md min-h-[180px] pt-5">
-                    {{ moviesList[numero].overview }}
-                </p>
+                <div class="bg-sky-200 rounded-md min-h-[200px] pt-3">
+                    <p >
+                        {{ moviesList[numero].overview }}
+                    
+                    </p>
+                </div>
             </div>
             <p class="py-3">Nota : {{ moviesList[numero].vote_average }}</p>
-            <button class="bg-sky-500 p-2 rounded-md" @click="changeNumber">Gerar Outro</button>
+            <div>
+                <button class="bg-sky-200 p-2 rounded-md hover:bg-sky-500 hover:drop-shadow-lg mx-2" @click="changeNumber">Gerar Outro</button>
+                <button class="bg-sky-200 p-2 rounded-md hover:bg-sky-500 hover:drop-shadow-lg" @click="addFavorite">Add to watchlist</button>
+            </div>
+        
         </div>
         <div v-else>Loading</div>
     </section>
