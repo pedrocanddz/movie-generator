@@ -8,7 +8,6 @@ export default{
             generos: [],
             movieFetcher: new MovieFetcher(),
             numero: 0,
-            favoritesList:[],
         }
     },
     methods:{
@@ -25,8 +24,7 @@ export default{
             });
         },
         addFavorite(){
-            this.favoritesList.push(this.moviesList[this.numero]);
-            console.log(this.favoritesList);
+            this.$emit('add-favorite', this.moviesList[this.numero]);
         }
     },
     async created(){

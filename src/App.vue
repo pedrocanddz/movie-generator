@@ -1,10 +1,9 @@
 <script setup>
-import MoviesBase from './components/MoviesBase.vue';
-import FavoritesList from './components/FavoritesList.vue';
+import LandingPage from './components/LandingPage.vue';
+
 
 </script>
 
 <template>
-  <MoviesBase/> 
-  <FavoritesList/>
+  <LandingPage />
 </template>
