@@ -14,9 +14,16 @@ export default{
     },
     methods:{
         addFavorite(movie){
+            if(this.favoritesList.find((item) => item.id === movie.id)){
+                return;
+            }
             this.favoritesList.push(movie);
             console.log(this.favoritesList);
         },
+        removeFavorite(movie){
+            this.favoritesList = this.favoritesList.filter((item) => item.id !== movie.id);
+            
+        }
     },
 }
 
@@ -24,9 +31,9 @@ export default{
 
 <template>
 
-    <section>
+    <section class="flex justify-center">
         <MoviesBase @add-favorite="addFavorite"/>
-        <FavoritesList :favoritesList="favoritesList"/>
+        <FavoritesList @remove-favorite="removeFavorite" :favoritesList="favoritesList"/>
     </section>
 
 </template>
