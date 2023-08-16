@@ -58,5 +58,18 @@ export default class MovieFetcher{
         this.movieList = data1.results.concat(data2.results, data3.results, data4.results, data5.results);    
         return this.movieList;
     }
+    
+    async getMovieDetails(movieId){
+        const options = {
+            method: 'GET',
+            headers: {
+              accept: 'application/json',
+              Authorization: `Bearer ${this.api_key}`
+            }
+        };
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=pt-BR`, options);
+        const data = await response.json();
+        return data;
+    }
 }
 
