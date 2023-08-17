@@ -23,6 +23,12 @@ export default{
         removeFavorite(movie){
             this.favoritesList = this.favoritesList.filter((item) => item.id !== movie.id);
             
+        },
+    },
+    created(){
+        const watchlist = localStorage.getItem('watchlist');
+        if(watchlist){
+            this.favoritesList = JSON.parse(watchlist);
         }
     },
 }
