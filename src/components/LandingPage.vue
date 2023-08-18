@@ -24,6 +24,9 @@ export default{
             this.favoritesList = this.favoritesList.filter((item) => item.id !== movie.id);
             
         },
+        clearWatchList(){
+            this.favoritesList = [];
+        },
     },
     created(){
         const watchlist = localStorage.getItem('watchlist');
@@ -39,7 +42,7 @@ export default{
 
     <section class="flex justify-center">
         <MoviesBase @add-favorite="addFavorite"/>
-        <FavoritesList @remove-favorite="removeFavorite" :favoritesList="favoritesList"/>
+        <FavoritesList @remove-favorite="removeFavorite" @clear-watchlist="clearWatchList" :favoritesList="favoritesList"/>
     </section>
 
 </template>

@@ -24,6 +24,10 @@
             saveWatchList(){
                 const watchlist = JSON.stringify(this.favoritesList);
                 localStorage.setItem('watchlist', watchlist);
+            },
+            clearWatchList(){
+                localStorage.removeItem('watchlist');
+                this.$emit('clear-watchlist');
             }
         },
         data(){
@@ -55,7 +59,8 @@
             </li>
         </ul>
         <template v-if="favoritesList.length > 0">
-            <button @click="saveWatchList" class="px-2 bg-green-300 font-bold rounded-lg">Salvar</button>
+            <button @click="saveWatchList" class="px-2 mx-1 bg-green-300 font-bold rounded-lg">Salvar</button>
+            <button @click="clearWatchList" class="px-2 mx-1 bg-green-300 font-bold rounded-lg">Limpar</button>
         </template>
     </section>
 

@@ -1,6 +1,5 @@
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './routes/router'; // Import your router configuration
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import './index.css'
-
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app');
